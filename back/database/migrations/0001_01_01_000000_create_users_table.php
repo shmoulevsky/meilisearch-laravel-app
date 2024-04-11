@@ -14,8 +14,19 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('last_name')->nullable();
+            $table->string('second_name')->nullable();
+            $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('phone_verified_at')->nullable();
+
+            $table->string('phone')->unique()->nullable();
+            $table->enum('status', [
+                \App\Modules\User\Enums\UserStatusEnum::active->value,
+                \App\Modules\User\Enums\UserStatusEnum::not_confirmed->value,
+                \App\Modules\User\Enums\UserStatusEnum::blocked->value,
+            ])->default(\App\Modules\User\Enums\UserStatusEnum::not_confirmed->value);
+
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

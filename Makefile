@@ -9,7 +9,7 @@ up: ## Запуск проекта
 	@echo "Started succesfull!"
 
 bash: ## Доступ к консоли веба
-	@./vendor/bin/sail bash
+	@./back/vendor/bin/sail bash
 
 
 
