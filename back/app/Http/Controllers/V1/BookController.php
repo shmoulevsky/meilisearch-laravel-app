@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 
 use App\Http\Controllers\Controller;
@@ -124,7 +124,7 @@ class BookController extends Controller
 			$request->author_id,
 			$request->rating,
 			$request->num_ratings,
-			
+
         );
 
         $book = $this->bookService->createOrUpdate($dto);
@@ -162,7 +162,7 @@ class BookController extends Controller
 			$request->author_id,
 			$request->rating,
 			$request->num_ratings,
-			
+
         );
 
         $book = $this->bookService->createOrUpdate($dto);

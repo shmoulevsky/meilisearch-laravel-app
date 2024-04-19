@@ -23,12 +23,12 @@ class BookRepository extends BaseRepository
 
     public function getList(string $sort, string $dir, string $count, array $filter) :?LengthAwarePaginator
     {
-        $builder = Book::query();
+        $builder = Book::query()->with(['author','genres']);
 
         if(isset($filter['q'])){
-            $builder->where(function ($query) use ($filter){
-               $query->where('name', 'ilike', '%'.$filter['q'].'%');
-            });
+            $builder = Book::search($filter['q'])->query(function($query) {
+                    $query->with(['author', 'genres']);
+                });
         }
 
         return $builder->orderBy($sort, $dir)->paginate($count);
