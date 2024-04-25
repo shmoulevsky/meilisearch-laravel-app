@@ -25,7 +25,7 @@ async function search(){
     path: '/books/search',
     query: {
       page: 1,
-      q: q.value
+      'filter[q]':  q.value
     }
   })
 }
@@ -78,8 +78,8 @@ button{
   border: 0px;
   background-color: transparent;
   position: absolute;
-  right: 10px;
-  top: 5px;
+  right: 14px;
+  top: 12px;
 }
 
 

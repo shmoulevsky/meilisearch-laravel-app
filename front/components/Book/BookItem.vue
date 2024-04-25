@@ -1,7 +1,7 @@
 <template>
   <div class="book-item">
     <div class="info-wrap">
-      <span class="author">{{item.author}}</span>
+      <RouterLink class="author" :to=item.author_url>{{item.author}}</RouterLink>
       <div class="rating-wrap">
         <span class="rating">
           <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,11 +17,9 @@
         </span>
       </div>
     </div>
-    <span class="title">{{item.title}}</span>
+    <RouterLink :to=item.url class="title">{{item.title}}</RouterLink>
     <div>
-      <RouterLink v-for="genre in item.genres" :to=item.id class="genre">
-        {{genre.title}}
-      </RouterLink>
+      <BookGenreList :items=item.genres></BookGenreList>
     </div>
   </div>
 </template>
@@ -54,14 +52,18 @@ const props = defineProps({
 
 .author{
   font-size: 16px;
+  text-decoration: none;
   font-weight: bold;
   display: block;
   color: #777;
 }
 
-.title{
+a.title{
   font-size: 18px;
   display: block;
+  color: #111111;
+  margin-bottom: 3px;
+  text-decoration: none;
 }
 
 .rating{

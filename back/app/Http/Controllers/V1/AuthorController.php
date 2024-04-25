@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 
 use App\Http\Controllers\Controller;
@@ -121,7 +121,7 @@ class AuthorController extends Controller
             null,
             $request->name,
 			$request->last_name,
-			
+
         );
 
         $author = $this->authorService->createOrUpdate($dto);
@@ -156,7 +156,7 @@ class AuthorController extends Controller
             $request->id,
             $request->name,
 			$request->last_name,
-			
+
         );
 
         $author = $this->authorService->createOrUpdate($dto);
@@ -183,7 +183,7 @@ class AuthorController extends Controller
     public function delete(AuthorDeleteRequest $request)
     {
         try{
-            $this->authorService->delete(Auth::id(), $request->id);
+            $this->authorService->delete($request->id);
         }catch (\Exception $exception){
             return new ErrorResource($exception);
         }

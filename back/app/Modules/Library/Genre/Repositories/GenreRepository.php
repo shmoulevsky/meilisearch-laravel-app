@@ -3,9 +3,10 @@
 namespace App\Modules\Library\Genre\Repositories;
 
 use App\Modules\Base\Repositories\BaseRepository;
-use app\Modules\Library\Genre\Models\Genre;
+use App\Modules\Library\Genre\Models\Genre;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
+
 
 class GenreRepository extends BaseRepository
 {
@@ -20,17 +21,11 @@ class GenreRepository extends BaseRepository
         return Genre::query()->where('id', $id)->first();
     }
 
-    public function getList(string $sort, string $dir, string $count, array $filter) :?LengthAwarePaginator
+    public function getAll() :?Collection
     {
-        $builder = Genre::query();
+        $builder = Genre::query()->withCount('books');
 
-        if(isset($filter['q'])){
-            $builder->where(function ($query) use ($filter){
-               $query->where('name', 'ilike', '%'.$filter['q'].'%');
-            });
-        }
-
-        return $builder->orderBy($sort, $dir)->paginate($count);
+        return $builder->whereHas('books')->orderBy('title')->get();
     }
 
     public function getByTitle(array $titles)

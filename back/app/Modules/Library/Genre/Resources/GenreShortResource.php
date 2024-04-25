@@ -12,7 +12,8 @@ class GenreShortResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-			
+            'count' => $this->books_count,
+
         ];
     }
 }

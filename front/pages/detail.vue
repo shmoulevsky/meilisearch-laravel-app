@@ -1,14 +1,12 @@
 <template>
   <div class="wrap">
     <SearchBar></SearchBar>
-    <AllBookGenres></AllBookGenres>
-    <BookList></BookList>
+    <BookDetail></BookDetail>
   </div>
 </template>
 <script setup lang="ts">
 import SearchBar from "~/components/Ui/SearchBar.vue";
-import BookList from "~/components/Book/BookList.vue";
-import AllBookGenres from "~/components/Book/AllBookGenres.vue";
+import BookDetail from "~/components/Book/BookDetail.vue";
 </script>
 <style lang="scss" scoped>
 @import "./assets/variables.scss";

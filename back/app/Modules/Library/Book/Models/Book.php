@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Modules\Library\Book\Models;
+namespace App\Modules\Library\Book\Models;
 
 use App\Modules\Library\Author\Models\Author;
 use App\Modules\Library\Genre\Models\Genre;
@@ -19,7 +19,9 @@ class Book extends Model
         return [
             'title' => $this->title,
             'description' => $this->description,
-            'genres' => $this->genres()->pluck('title')
+            'genre_id' => $this->genres->pluck('id'),
+            'author_id' => $this->author_id,
+            'author' => $this->author->last_name.' '.$this->author->name
         ];
     }
 

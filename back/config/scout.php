@@ -135,7 +135,7 @@ return [
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
              'books' => [
-                 'filterableAttributes'=> ['id', 'title'],
+                 'filterableAttributes'=> ['id', 'title', 'author_id', 'genre_id'],
                  'sortableAttributes'=> ['id', 'title'],
              ],
         ],

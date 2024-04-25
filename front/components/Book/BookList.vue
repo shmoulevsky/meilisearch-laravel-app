@@ -2,20 +2,28 @@
 
 
 import Pagination from "~/components/Ui/Pagination.vue";
+import {useGenreStore} from "~/store/genres";
+import {storeToRefs} from "pinia";
+
+const genresStore = storeToRefs(useGenreStore());
 
 const route = useRoute()
 const currentPage = ref(1)
 
 
+
 let query:Object = {
-  'url' : route.path,
-  'page' : currentPage
+  'page' : currentPage,
+  'filter[q]' : route.query['filter[q]'] ?? null,
+  'filter[genre_id]' : route.params.genre_id ?? null,
+  'filter[author_id]' : route.params.author_id ?? null,
+  'filter[genres]' : genresStore.genreIds,
 }
 
 
 const {data:books} = await useMyFetch(`/api/v1/books?`, {
   query,
-  watch: [currentPage.value]
+  watch: [currentPage, genresStore.genreIds]
 })
 
 function navClick(page:string){

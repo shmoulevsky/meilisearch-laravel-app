@@ -12,6 +12,7 @@ class BookGenreResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'url' => '/books/genre/'.$this->id,
         ];
     }
 }

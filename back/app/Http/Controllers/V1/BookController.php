@@ -14,6 +14,7 @@ use App\Modules\Library\Book\Requests\BookShowRequest;
 use App\Modules\Library\Book\Requests\BookStoreRequest;
 use App\Modules\Library\Book\Requests\BookUpdateRequest;
 use App\Modules\Library\Book\Resources\BookCollection;
+use App\Modules\Library\Book\Resources\BookFastSearchResource;
 use App\Modules\Library\Book\Resources\BookResource;
 use App\Modules\Library\Book\Services\BookService;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class BookController extends Controller
      *     tags={"Book"},
      *     operationId="BookList",
      *     @OA\Parameter(
-     *          name="q",
+     *          name="filter[q]",
      *          in="query",
      *          example="Book",
      *          description="query for search in title or text",
@@ -70,9 +71,19 @@ class BookController extends Controller
         return new BookCollection($books);
     }
 
+    public function fastSearch(Request $request)
+    {
+        $books = $this->bookRepository->fastSearch(
+            $request->string('q')->value()
+        );
+
+        return BookFastSearchResource::collection($books);
+    }
+
+
     /**
      * @OA\Get(
-     *     path="/api/v1/book/{id}",
+     *     path="/api/v1/books/{id}",
      *     summary="Get book by id",
      *     tags={"Book"},
      *     operationId="BookShow",
@@ -89,7 +100,7 @@ class BookController extends Controller
      */
     public function show(BookShowRequest $request)
     {
-        $book = $this->bookRepository->getById($request->id, Auth::id());
+        $book = $this->bookRepository->getById($request->id);
         return new BookResource($book);
     }
 
@@ -189,7 +200,7 @@ class BookController extends Controller
     public function delete(BookDeleteRequest $request)
     {
         try{
-            $this->bookService->delete(Auth::id(), $request->id);
+            $this->bookService->delete($request->id);
         }catch (\Exception $exception){
             return new ErrorResource($exception);
         }

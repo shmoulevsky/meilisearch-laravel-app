@@ -12,11 +12,12 @@ class BookResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-			'description' => $this->description,
-			'author_id' => $this->author_id,
-			'rating' => $this->rating,
-			'num_ratings' => $this->num_ratings,
-			
+            'description' => $this->description,
+            'author' => $this->author->name.' '.$this->author->last_name,
+            'author_url' => '/books/author/'.$this->author->id,
+            'genres' => BookGenreResource::collection($this->genres),
+            'rating' => $this->rating,
+            'num_ratings' => $this->num_ratings,
         ];
     }
 }
