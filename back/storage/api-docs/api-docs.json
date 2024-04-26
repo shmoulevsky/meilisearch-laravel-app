@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://127.200.200.165/api",
+            "url": "http://127.200.200.165",
             "description": "demo laravel-meilisearch API Server"
         }
     ],
@@ -242,6 +242,20 @@
                         "description": "query for search in title or text",
                         "required": false,
                         "example": "Book"
+                    },
+                    {
+                        "name": "filter[genres]",
+                        "in": "query",
+                        "description": "query filter by genres",
+                        "required": false,
+                        "example": "2,3,4"
+                    },
+                    {
+                        "name": "filter[author_id]",
+                        "in": "query",
+                        "description": "query filter by author",
+                        "required": false,
+                        "example": "5"
                     }
                 ],
                 "responses": {

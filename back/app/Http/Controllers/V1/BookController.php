@@ -18,7 +18,6 @@ use App\Modules\Library\Book\Resources\BookFastSearchResource;
 use App\Modules\Library\Book\Resources\BookResource;
 use App\Modules\Library\Book\Services\BookService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 
 class BookController extends Controller
@@ -45,7 +44,20 @@ class BookController extends Controller
      *          description="query for search in title or text",
      *          required=false,
      *     ),
-
+     *     @OA\Parameter(
+     *          name="filter[genres]",
+     *          in="query",
+     *          example="2,3,4",
+     *          description="query filter by genres",
+     *          required=false,
+     *     ),
+     *     @OA\Parameter(
+     *          name="filter[author_id]",
+     *          in="query",
+     *          example="5",
+     *          description="query filter by author",
+     *          required=false,
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Success",
