@@ -12,7 +12,7 @@ App features:
 - Meliasearch as search engine
 - Project structured in modules
 - Basic auth (JWT auth) and register system
-- Swagger (http://127.200.200.165/api/docs)
+- Swagger (http://127.200.200.165/api/documentation)
 - Nuxt3
 - Laravel 11
 - Docker (php 8.3, PosgresSQL, Meliasearch, Mailhog)

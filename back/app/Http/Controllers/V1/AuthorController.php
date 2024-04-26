@@ -101,7 +101,7 @@ class AuthorController extends Controller
      *     operationId="AuthorStore",
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/AuthorsStoreRequest")
+     *         @OA\JsonContent(ref="#/components/schemas/AuthorStoreRequest")
      *      ),
      *     @OA\Response(
      *         response="200",

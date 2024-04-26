@@ -1,0 +1,1031 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Meilisearch app demo API",
+        "description": "An API for demo meilisearch",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.200.200.165/api",
+            "description": "demo laravel-meilisearch API Server"
+        }
+    ],
+    "paths": {
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User auth (by email or phone)",
+                "operationId": "Login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "operationId": "Logout",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Token refresh",
+                "operationId": "Refresh",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RefreshResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/authors": {
+            "get": {
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Get authors list",
+                "operationId": "AuthorList",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "query for search in title or text",
+                        "required": false,
+                        "example": "Author"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthorsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Store author",
+                "operationId": "AuthorStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthorStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/v1/author/{id}": {
+            "get": {
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Get author by id",
+                "operationId": "AuthorShow",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/api/v1/authors/{id}": {
+            "patch": {
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Update author",
+                "operationId": "AuthorUpdate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthorUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/author/{id}": {
+            "delete": {
+                "tags": [
+                    "Author"
+                ],
+                "summary": "Delete author by id",
+                "operationId": "AuthorDelete",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/api/v1/books": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Get books list",
+                "operationId": "BookList",
+                "parameters": [
+                    {
+                        "name": "filter[q]",
+                        "in": "query",
+                        "description": "query for search in title or text",
+                        "required": false,
+                        "example": "Book"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BooksResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Store book",
+                "operationId": "BookStore",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/v1/books/{id}": {
+            "get": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Get book by id",
+                "operationId": "BookShow",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Update book",
+                "operationId": "BookUpdate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/book/{id}": {
+            "delete": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Delete book by id",
+                "operationId": "BookDelete",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error"
+                    }
+                }
+            }
+        },
+        "/api/v1/genres": {
+            "get": {
+                "tags": [
+                    "Genre"
+                ],
+                "summary": "Get genres list",
+                "operationId": "GenreList",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "query for search in title or text",
+                        "required": false,
+                        "example": "Genre"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GenresResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "Register"
+                ],
+                "summary": "Register user",
+                "operationId": "Register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegisterResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AuthRequest": {
+                "title": "AuthRequest",
+                "description": "Desc",
+                "properties": {
+                    "login": {
+                        "description": "login",
+                        "type": "string",
+                        "example": "3876234062"
+                    },
+                    "password": {
+                        "description": "password",
+                        "type": "string",
+                        "example": "12345678pp"
+                    }
+                },
+                "type": "object"
+            },
+            "AuthResponse": {
+                "title": "AuthResponse",
+                "description": "Desc",
+                "properties": {
+                    "user": {
+                        "description": "$user",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "description": "id",
+                                    "type": "integer",
+                                    "example": "4486"
+                                },
+                                "name": {
+                                    "description": "name",
+                                    "type": "string",
+                                    "example": "Тест"
+                                },
+                                "lastname": {
+                                    "description": "lastname",
+                                    "type": "string",
+                                    "example": "Тестов"
+                                },
+                                "email": {
+                                    "description": "email",
+                                    "type": "string",
+                                    "example": "testov@mail.ru"
+                                },
+                                "phone": {
+                                    "description": "phone",
+                                    "type": "string",
+                                    "example": "+79230001234"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "token": {
+                        "description": "token",
+                        "type": "string",
+                        "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjEwMC4yMTAuMTAwL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg0NDgzOTI5LCJleHAiOjE2ODQ0ODc1MjksIm5iZiI6MTY4NDQ4MzkyOSwianRpIjoieUJlN0xvVzhpcHRRZ0dPTyIsInN1YiI6IjQ0ODYiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.K5wsrIsneAvJh8FIIWfJXZb49bRiTjDFnLdA6xPVbAY"
+                    },
+                    "error": {
+                        "description": "error",
+                        "type": "string",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorResponse": {
+                "title": "AuthorShortItem",
+                "description": "Desc",
+                "properties": {
+                    "id": {
+                        "description": "id",
+                        "type": "integer",
+                        "example": "7"
+                    },
+                    "name": {
+                        "description": "name",
+                        "type": "string",
+                        "example": "Jas"
+                    },
+                    "last_name": {
+                        "description": "last_name",
+                        "type": "string",
+                        "example": "T."
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorShortItem": {
+                "title": "AuthorShortItem",
+                "description": "Desc",
+                "properties": {
+                    "id": {
+                        "description": "id",
+                        "type": "integer",
+                        "example": "5776"
+                    },
+                    "name": {
+                        "description": "name",
+                        "type": "string",
+                        "example": "Jas"
+                    },
+                    "last_name": {
+                        "description": "last_name",
+                        "type": "string",
+                        "example": "T."
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorStoreRequest": {
+                "title": "AuthorStoreRequest",
+                "description": "Desc",
+                "properties": {
+                    "name": {
+                        "description": "name",
+                        "type": "string",
+                        "example": "Eugeny"
+                    },
+                    "last_name": {
+                        "description": "last_name",
+                        "type": "string",
+                        "example": "Shmoulevsky"
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorUpdateRequest": {
+                "title": "AuthorUpdateRequest",
+                "description": "Desc",
+                "properties": {
+                    "name": {
+                        "description": "name",
+                        "type": "string",
+                        "example": "Eugeny"
+                    },
+                    "last_name": {
+                        "description": "last_name",
+                        "type": "string",
+                        "example": "Shmoulevsky"
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorsResponse": {
+                "title": "AuthorsResponse",
+                "description": "Desc",
+                "properties": {
+                    "data": {
+                        "description": "$data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AuthorShortItem"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "BookResponse": {
+                "title": "BookShortItem",
+                "description": "Desc",
+                "properties": {
+                    "id": {
+                        "description": "id",
+                        "type": "integer",
+                        "example": "29"
+                    },
+                    "title": {
+                        "description": "title",
+                        "type": "string",
+                        "example": "Alice's Adventures in Wonderland / Through the Looking-Glass"
+                    },
+                    "description": {
+                        "description": "rating",
+                        "type": "string",
+                        "example": "some description"
+                    },
+                    "url": {
+                        "description": "url",
+                        "type": "string",
+                        "example": "/books/29"
+                    },
+                    "author": {
+                        "description": "author",
+                        "type": "string",
+                        "example": "Lewis Carroll"
+                    },
+                    "author_url": {
+                        "description": "author_url",
+                        "type": "string",
+                        "example": "/books/author/25"
+                    },
+                    "rating": {
+                        "description": "rating",
+                        "type": "string",
+                        "example": "4.06"
+                    },
+                    "num_ratings": {
+                        "description": "num_ratings",
+                        "type": "integer",
+                        "example": "536"
+                    },
+                    "genres": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GenreItem"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "BookShortItem": {
+                "title": "BookShortItem",
+                "description": "Desc",
+                "properties": {
+                    "id": {
+                        "description": "id",
+                        "type": "integer",
+                        "example": "29"
+                    },
+                    "title": {
+                        "description": "title",
+                        "type": "string",
+                        "example": "Alice's Adventures in Wonderland / Through the Looking-Glass"
+                    },
+                    "url": {
+                        "description": "url",
+                        "type": "string",
+                        "example": "/books/29"
+                    },
+                    "author": {
+                        "description": "author",
+                        "type": "string",
+                        "example": "Lewis Carroll"
+                    },
+                    "author_url": {
+                        "description": "author_url",
+                        "type": "string",
+                        "example": "/books/author/25"
+                    },
+                    "rating": {
+                        "description": "rating",
+                        "type": "string",
+                        "example": "4.06"
+                    },
+                    "num_ratings": {
+                        "description": "num_ratings",
+                        "type": "integer",
+                        "example": "536"
+                    },
+                    "genres": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GenreItem"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "BookStoreRequest": {
+                "title": "BookStoreRequest",
+                "description": "Desc",
+                "properties": {
+                    "title": {
+                        "description": "title",
+                        "type": "string",
+                        "example": "Some book"
+                    },
+                    "description": {
+                        "description": "description",
+                        "type": "string",
+                        "example": "Some book description of some book description"
+                    },
+                    "author_id": {
+                        "description": "author_id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "rating": {
+                        "description": "rating",
+                        "type": "integer",
+                        "example": "5"
+                    },
+                    "num_ratings": {
+                        "description": "num_ratings",
+                        "type": "integer",
+                        "example": "1000"
+                    }
+                },
+                "type": "object"
+            },
+            "BookUpdateRequest": {
+                "title": "BookUpdateRequest",
+                "description": "Desc",
+                "properties": {
+                    "title": {
+                        "description": "title",
+                        "type": "string",
+                        "example": "Some book"
+                    },
+                    "description": {
+                        "description": "description",
+                        "type": "string",
+                        "example": "Some book description of some book description"
+                    },
+                    "author_id": {
+                        "description": "author_id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "rating": {
+                        "description": "rating",
+                        "type": "integer",
+                        "example": "5"
+                    },
+                    "num_ratings": {
+                        "description": "num_ratings",
+                        "type": "integer",
+                        "example": "1000"
+                    }
+                },
+                "type": "object"
+            },
+            "BooksResponse": {
+                "title": "BooksResponse",
+                "description": "Desc",
+                "properties": {
+                    "data": {
+                        "description": "$data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BookShortItem"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ChangePasswordRequest": {
+                "title": "ChangePasswordRequest",
+                "description": "Desc",
+                "properties": {
+                    "password": {
+                        "description": "password",
+                        "type": "string",
+                        "example": "12345678pp"
+                    },
+                    "password_confirmation": {
+                        "description": "password_confirmation",
+                        "type": "string",
+                        "example": "12345678pp"
+                    },
+                    "password_old": {
+                        "description": "password_confirmation",
+                        "type": "string",
+                        "example": "12345678pp"
+                    }
+                },
+                "type": "object"
+            },
+            "GenreItem": {
+                "title": "GenreItem",
+                "description": "Desc",
+                "properties": {
+                    "id": {
+                        "description": "id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "title": {
+                        "description": "title",
+                        "type": "string",
+                        "example": "Classics"
+                    },
+                    "url": {
+                        "description": "url",
+                        "type": "string",
+                        "example": "/books/genre/1"
+                    }
+                },
+                "type": "object"
+            },
+            "GenresResponse": {
+                "title": "GenresResponse",
+                "description": "Desc",
+                "properties": {
+                    "data": {
+                        "description": "$data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GenreItem"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ProfileResponse": {
+                "title": "ProfileResponse",
+                "description": "Desc",
+                "properties": {
+                    "data": {
+                        "description": "$data",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "description": "id",
+                                    "type": "integer",
+                                    "example": "13934"
+                                },
+                                "name": {
+                                    "description": "name",
+                                    "type": "string",
+                                    "example": "Тест"
+                                },
+                                "lastname": {
+                                    "description": "lastname",
+                                    "type": "string",
+                                    "example": "Тестов"
+                                },
+                                "email": {
+                                    "description": "email",
+                                    "type": "string",
+                                    "example": "test130@mail.ru"
+                                },
+                                "phone": {
+                                    "description": "phone",
+                                    "type": "string",
+                                    "example": "79232177338"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RefreshResponse": {
+                "title": "RefreshResponse",
+                "description": "Desc",
+                "properties": {
+                    "token": {
+                        "description": "token",
+                        "type": "string",
+                        "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjEwMC4yMTAuMTAwL2FwaS92MS9hdXRoL3JlZnJlc2giLCJpYXQiOjE2ODQ4NTM0NTIsImV4cCI6MTY4NDg1NzA1MywibmJmIjoxNjg0ODUzNDUzLCJqdGkiOiIwb0xOMUo5UURLZThEaFFiIiwic3ViIjoiMTM5MzQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.Qg5idCiXw6VdXHAQzDdskP-gSnHgFpQYB56LBLZWoPY"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "title": "RegisterRequest",
+                "description": "Desc",
+                "properties": {
+                    "name": {
+                        "description": "name",
+                        "type": "string",
+                        "example": "Test"
+                    },
+                    "last_name": {
+                        "description": "last name",
+                        "type": "string",
+                        "example": "Testov"
+                    },
+                    "email": {
+                        "description": "email",
+                        "type": "string",
+                        "example": "test130@mail.ru"
+                    },
+                    "phone": {
+                        "description": "phone",
+                        "type": "string",
+                        "example": "8(923)000-7300"
+                    },
+                    "password": {
+                        "description": "password",
+                        "type": "string",
+                        "example": "12345678pp"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterResponse": {
+                "title": "RegisterFinishResponse",
+                "description": "Desc",
+                "properties": {
+                    "user": {
+                        "description": "$user",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "id": {
+                                    "description": "id",
+                                    "type": "integer",
+                                    "example": "13934"
+                                },
+                                "name": {
+                                    "description": "name",
+                                    "type": "string",
+                                    "example": "Тест"
+                                },
+                                "lastname": {
+                                    "description": "lastname",
+                                    "type": "string",
+                                    "example": "Тестов"
+                                },
+                                "email": {
+                                    "description": "email",
+                                    "type": "string",
+                                    "example": "test130@mail.ru"
+                                },
+                                "phone": {
+                                    "description": "phone",
+                                    "type": "string",
+                                    "example": "79232177300"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "token": {
+                        "description": "token",
+                        "type": "string",
+                        "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjEwMC4yMTAuMTAwL2FwaS9yZWdpc3Rlci9maW5pc2giLCJpYXQiOjE2ODQ3NjE1ODIsImV4cCI6MTY4NDc2NTE4MiwibmJmIjoxNjg0NzYxNTgyLCJqdGkiOiJSQ0R5TlhXaW10UjNOa2NxIiwic3ViIjoiMTM5MzQiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.xyYTVoQPJYG7Zm4RBJ2wDpaAztX4M46-DiLPrh4Jw0A"
+                    },
+                    "error": {
+                        "description": "error",
+                        "type": "string",
+                        "example": ""
+                    }
+                },
+                "type": "object"
+            },
+            "SuccessResponse": {
+                "title": "SuccessResponse",
+                "description": "Success",
+                "properties": {
+                    "data": {
+                        "description": "$data",
+                        "properties": {
+                            "status": {
+                                "description": "status",
+                                "type": "boolean",
+                                "example": "true"
+                            },
+                            "errors": {
+                                "description": "errors",
+                                "type": "null",
+                                "example": "null"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "UserProfileUpdateRequest": {
+                "title": "UserProfileUpdateRequest",
+                "description": "Desc",
+                "properties": {
+                    "name": {
+                        "description": "name",
+                        "type": "string",
+                        "example": "Test"
+                    },
+                    "lastname": {
+                        "description": "lastname",
+                        "type": "string",
+                        "example": "Testov"
+                    },
+                    "email": {
+                        "description": "email",
+                        "type": "string",
+                        "example": "test@mail.ru"
+                    },
+                    "phone": {
+                        "description": "phone",
+                        "type": "string",
+                        "example": "89232170000"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}

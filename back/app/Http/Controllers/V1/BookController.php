@@ -112,7 +112,7 @@ class BookController extends Controller
      *     operationId="BookStore",
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/BooksStoreRequest")
+     *         @OA\JsonContent(ref="#/components/schemas/BookStoreRequest")
      *      ),
      *     @OA\Response(
      *         response="200",
